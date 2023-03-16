@@ -13,6 +13,9 @@
 #include <stdlib.h>
 #include "tokenizer.h"
 
+
+
+
 // global variables
 char *line;             // Global pointer to line of input
 
@@ -53,15 +56,28 @@ int main(int argc, char* argv[]) {
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-
+      remove_whitespace(line);
       // Add code here. Keep this file no longer than 50 lines of code.
       // Use helper functions.
+      
+
 
    }
 
    fclose(in_file);
    fclose(out_file);
    return 0;
+}
+/// @brief remove whitespace from the current line
+/// @param line - the current line that is being read
+void remove_whitespace(char* line){
+  char* temp = line;
+  do{
+    while(*temp = ' '){
+      ++temp;
+    }
+  }
+  while(*line++ = *temp++);
 }
 
 /**
