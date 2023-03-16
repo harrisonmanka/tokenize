@@ -1,7 +1,7 @@
 /**
  * Header file for the tokenizer project 
- * @author your_name
- * @version date
+ * @author Harrison Manka & Matthew Agudell
+ * @version 03/16/23
  */
 /* Constants */
 #define LINE 100
