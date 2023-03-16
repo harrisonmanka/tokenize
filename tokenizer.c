@@ -4,8 +4,8 @@
  * NOTE: The terms 'token' and 'lexeme' are used interchangeably in this
  *       program.
  *
- * @author Harrison Manka & Matthew Agudell
- * @version 03/16/23
+ * @author Your Name
+ * @version current date
  */
 
 #include <stdio.h>
@@ -52,6 +52,10 @@ int main(int argc, char* argv[]) {
    while (fgets(input_line, LINE, in_file) != NULL)
    {
       line = input_line;  // Sets a global pointer to the memory location
+                           // where the input line resides.
+
+      // Add code here. Keep this file no longer than 50 lines of code.
+      // Use helper functions.
 
    }
 
