@@ -1,6 +1,6 @@
 /**
  * Header file for the tokenizer project 
- * @author Harrison Manka & Matthew Agudell
+ * @author Harrison Manka & Matthew Agudelo
  * @version 03/16/23
  */
 /* Constants */
@@ -18,9 +18,15 @@
 #define GREATER_THAN ">"
 #define NOT_EQUAL_SIGN "!="
 #define SEMI_COLON ";"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 /**
 * add comment
 */
-void get_token(char *);   
+char* remove_whitespace(char* );
+void get_token(char *); 
+void identify_lexeme(char*);
 
 

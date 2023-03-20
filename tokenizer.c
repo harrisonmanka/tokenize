@@ -57,6 +57,8 @@ int main(int argc, char* argv[]) {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
       remove_whitespace(line);
+      printf("%s", line);
+      identify_lexeme(line);
       // Add code here. Keep this file no longer than 50 lines of code.
       // Use helper functions.
       
@@ -70,14 +72,30 @@ int main(int argc, char* argv[]) {
 }
 /// @brief remove whitespace from the current line
 /// @param line - the current line that is being read
-void remove_whitespace(char* line){
-  char* temp = line;
-  do{
-    while(*temp = ' '){
-      ++temp;
+char* remove_whitespace(char* line){
+    int count = 0;
+    for (int i = 0; line[i]; i++)
+        if (line[i] != ' ')
+            line[count++] = line[i];
+    line[count] = '\0';
+}
+
+void identify_lexeme(char* line){
+  int cnt = 0;
+  char* lex = line;
+  for(cnt = 0; cnt  < strlen(lex); cnt++){
+    switch (lex[cnt])
+    {
+    case '+':
+          
+      /* code */
+      break;
+    
+    default:
+      break;
     }
+
   }
-  while(*line++ = *temp++);
 }
 
 /**
