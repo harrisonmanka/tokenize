@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "tokenizer.h"
-#include <pcre.h>
 
 
 
@@ -56,13 +56,13 @@ int main(int argc, char* argv[]) {
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-      remove_whitespace(line);
-      printf("%s", line);
-      identify_lexeme(line);
+      //remove_whitespace(line);
+      //printf("%s", line);
+      //identify_lexeme(line);
       // Add code here. Keep this file no longer than 50 lines of code.
       // Use helper functions.
       while(*line != ";"){
-          get_token(token);
+          get_token(line);
       }
       line_count++;
 
@@ -76,39 +76,43 @@ int main(int argc, char* argv[]) {
 
 /// @brief remove whitespace from the current line
 /// @param line - the current line that is being read
-char* remove_whitespace(char* line){
-    int count = 0;
-    for (int i = 0; line[i]; i++)
-        if (line[i] != ' ')
-            line[count++] = line[i];
-    line[count] = '\0';
-}
+//char* remove_whitespace(char* line){
+  //  int count = 0;
+    //for (int i = 0; line[i]; i++)
+      //  if (line[i] != ' ')
+        //    line[count++] = line[i];
+    //line[count] = '\0';
+//}
 
-void identify_lexeme(char* line){
-  int cnt = 0;
-  char* lex = line;
-  for(cnt = 0; cnt  < strlen(lex); cnt++){
-    switch (lex[cnt])
-    {
-    case '+':
-          
-      /* code */
-      break;
-    
-    default:
-      break;
-    }
 
-  }
-}
 
 /**
 * grab token
 */
 void get_token(char *token_ptr){
-    reinitialize TOKEN ARRAY
-    check current line pointer
-    if number{
+  line = token_ptr;
+  char token_arr[] = "";
+  int len = strlen(token_ptr);
+  //iterates through the entire char array
+  for(int i= 0; i < len; i++){
+    //this is checking if the char is an int
+    if(isdigit(token_ptr[i])){
+      token_arr[i] =  token_ptr[i];
+      get_token_type(token_arr[i]);
+      //need to check ahead if next char is also an int
+
+    }
+    //since this is a op no need to check ahead same with others
+    if(token_ptr[0] = '+'){
+      token_arr[0] = token_ptr[i];
+      get_token_type(token_arr[0]);
+      
+    }
+  }
+}
+    //reinitialize TOKEN ARRAY
+    //check current line pointer
+    /**if number{
         add to TOKEN ARRAY
         check for next number(s)
         while(line pointer == number)
@@ -128,27 +132,30 @@ void get_token(char *token_ptr){
         add to TOKEN ARRAY
         check for **
     }
-}
+}*/
 
 /**
  * get token type
  */
-void get_token_type(char* token){
-    switch(token_ptr){
-        case ADD_OP:
+void get_token_type(char token){
+    switch(token){
+        case '+':
+        //print to file maybe
+        //fprintf(out_file, "Token" + ADD_OP + " is a " );
             break;
-        case SUB_OP:
+        case '-':
             break;
-        case MULT_OP:
+        case '*':
             break;
-        case DIV_OP:
+        case '/':
             break;
-        case LEFT_PAREN:
+        case '(':
             break;
-        case RIGHT_PAREN:
+        case ')':
             break;
-        case EXPON_OP:
+        case '^':
             break;
-        case ASSIGN_OP:
+        case '=':
             break;
+}
 }

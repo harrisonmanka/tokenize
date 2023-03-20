@@ -10,8 +10,8 @@
 #define FALSE 0
 
 #define MULT_OP "*"
-#define ADD_OP "+"
-#definte SUB_OP "-"
+#define ADD_OP '+'
+#define SUB_OP "-"
 #define DIV_OP "/"
 #define ASSIGN_OP "="
 #define LEFT_PAREN "("
@@ -37,5 +37,6 @@
 char* remove_whitespace(char* );
 void get_token(char *); 
 void identify_lexeme(char*);
+void get_token_type(char);
 
 
