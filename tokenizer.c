@@ -12,13 +12,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include "tokenizer.h"
+#include <pcre.h>
 
 
 
 
 // global variables
 char *line;             // Global pointer to line of input
-
 // (optional) can declare some additional variable if you want to
 
 /**
@@ -61,7 +61,10 @@ int main(int argc, char* argv[]) {
       identify_lexeme(line);
       // Add code here. Keep this file no longer than 50 lines of code.
       // Use helper functions.
-      
+      while(*line != ";"){
+          get_token(token);
+      }
+      line_count++;
 
 
    }
@@ -70,6 +73,7 @@ int main(int argc, char* argv[]) {
    fclose(out_file);
    return 0;
 }
+
 /// @brief remove whitespace from the current line
 /// @param line - the current line that is being read
 char* remove_whitespace(char* line){
@@ -99,10 +103,52 @@ void identify_lexeme(char* line){
 }
 
 /**
-* add javadoc-like comment
+* grab token
 */
-void get_token(char *token_ptr)
-{
-   // Add code here. Keep this file no longer than 50 lines of code.
-   // Use helper functions. No duplicate code!
+void get_token(char *token_ptr){
+    reinitialize TOKEN ARRAY
+    check current line pointer
+    if number{
+        add to TOKEN ARRAY
+        check for next number(s)
+        while(line pointer == number)
+            add to TOKEN ARRAY
+    }
+    if letter{
+        add to TOKEN ARRAY
+        check for next letter(s)
+        while(line pointer == number)
+            add to TOKEN ARRAY
+    }
+    if (< > ! =){
+        add to TOKEN ARRAY
+        check for =
+    }
+    if (*){
+        add to TOKEN ARRAY
+        check for **
+    }
+}
+
+/**
+ * get token type
+ */
+void get_token_type(char* token){
+    switch(token_ptr){
+        case ADD_OP:
+            break;
+        case SUB_OP:
+            break;
+        case MULT_OP:
+            break;
+        case DIV_OP:
+            break;
+        case LEFT_PAREN:
+            break;
+        case RIGHT_PAREN:
+            break;
+        case EXPON_OP:
+            break;
+        case ASSIGN_OP:
+            break;
 }
