@@ -8,16 +8,25 @@
 #define TSIZE 20
 #define TRUE 1
 #define FALSE 0
+
 #define MULT_OP "*"
 #define ADD_OP "+"
-#define DIV_OP "-"
+#definte SUB_OP "-"
+#define DIV_OP "/"
 #define ASSIGN_OP "="
-#define LESS_THAN "<"
-#define EQUAL_OP "=="
+#define LEFT_PAREN "("
+#define RIGHT_PAREN ")"
+#define EXPON_OP "^"
+#define LESS_THEN_OP "<"
+#define LESS_THEN_OR_EQUAL_OP "<="
+#define GREATER_THEN_OR_EQUAL_OP ">="
+#define EQUALS_OP "=="
 #define NOT_OP "!"
-#define GREATER_THAN ">"
-#define NOT_EQUAL_SIGN "!="
+#define GREATER_THEN_OP ">"
+#define NOT_EQUAL_OP "!="
 #define SEMI_COLON ";"
+#define INT_LITERAL "[0-9]"
+
 /**
 * add comment
 */
