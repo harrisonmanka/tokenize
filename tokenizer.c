@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
           get_token(token);
       }
       if(*line == ";"){
-          line_count++; //statement number
+          line_count++; //statement numberr
       }
    }
 
