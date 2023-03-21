@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "tokenizer.h"
 #include <pcre.h>
 
@@ -20,6 +21,7 @@
 // global variables
 char *line;             // Global pointer to line of input
 // (optional) can declare some additional variable if you want to
+char *token_type; //
 
 /**
 * add comment
@@ -49,24 +51,16 @@ int main(int argc, char* argv[]) {
     fprintf(stderr, "ERROR: could not open %s for writing\n", argv[2]);
     exit(1);
   }
-
-   // (optional) can add some code here if you want some here
- 
    while (fgets(input_line, LINE, in_file) != NULL)
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-      remove_whitespace(line);
-      printf("%s", line);
-      identify_lexeme(line);
-      // Add code here. Keep this file no longer than 50 lines of code.
-      // Use helper functions.
       while(*line != ";"){
           get_token(token);
       }
-      line_count++;
-
-
+      if(*line == ";"){
+          line_count++; //statement number
+      }
    }
 
    fclose(in_file);
@@ -74,60 +68,46 @@ int main(int argc, char* argv[]) {
    return 0;
 }
 
-/// @brief remove whitespace from the current line
-/// @param line - the current line that is being read
-char* remove_whitespace(char* line){
-    int count = 0;
-    for (int i = 0; line[i]; i++)
-        if (line[i] != ' ')
-            line[count++] = line[i];
-    line[count] = '\0';
-}
-
-void identify_lexeme(char* line){
-  int cnt = 0;
-  char* lex = line;
-  for(cnt = 0; cnt  < strlen(lex); cnt++){
-    switch (lex[cnt])
-    {
-    case '+':
-          
-      /* code */
-      break;
-    
-    default:
-      break;
-    }
-
-  }
-}
-
 /**
 * grab token
 */
 void get_token(char *token_ptr){
-    reinitialize TOKEN ARRAY
-    check current line pointer
-    if number{
-        add to TOKEN ARRAY
-        check for next number(s)
-        while(line pointer == number)
-            add to TOKEN ARRAY
+    token_ptr = "";
+    int i = 0;
+    //get rid of white space
+    while(strcmp(line," ") == 1){
+        line++
     }
-    if letter{
-        add to TOKEN ARRAY
-        check for next letter(s)
-        while(line pointer == number)
-            add to TOKEN ARRAY
+    //check current line pointer
+    if(isdigit(line)){
+        token_ptr[i] = line;
+        line++;
+        //check for next number(s)
+        while(isdigit(line)){
+            token_ptr[i] = line;
+            line++
+        }
     }
-    if (< > ! =){
+    //get_token will call get_token_type with our token array containing "1" to set our GLOBAL token_type as INT_LITERAL
+    //then call print_to_file with our GLOBAL file point, token array containing "1", and our GLBOAL token_type
+    //to write to the output file
+    else if (< > ! =){
         add to TOKEN ARRAY
         check for =
     }
-    if (*){
+    else if (*){
         add to TOKEN ARRAY
         check for **
     }
+}
+/**
+ *
+ * @param out_file
+ * @param token_arr
+ * @param token_type
+ */
+void print_to_file(FILE* out_file, char* token_arr, char* token_type){
+
 }
 
 /**

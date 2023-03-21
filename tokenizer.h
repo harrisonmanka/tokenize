@@ -11,7 +11,7 @@
 
 #define MULT_OP "*"
 #define ADD_OP "+"
-#definte SUB_OP "-"
+#define SUB_OP "-"
 #define DIV_OP "/"
 #define ASSIGN_OP "="
 #define LEFT_PAREN "("
