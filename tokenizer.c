@@ -32,8 +32,8 @@ int main(int argc, char* argv[]) {
    FILE  *out_file = NULL;
    
    int   line_count,        /* Number of lines read             */
-         start,    /* is this the start of a new statement? */
-         count;             /* count of tokens                  */
+         //start,    /* is this the start of a new statement? */
+         count = 0;             /* count of tokens                  */
 
   if (argc != 3) {
     printf("Usage: tokenizer inputFile outputFile\n");
@@ -58,14 +58,20 @@ int main(int argc, char* argv[]) {
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-      
-      
-      //printf("Statement" "%d \n", line_count);
+
+      if(line_count == 0){
+        line_count++;
+        fprintf(out_file, "Statement #" "%d \n", line_count);
+        line_count++;
+      }
       //this is here because the first time around token has unknown chars not sure why.
       memset(token, 0, strlen(token));
       for(int i = 0; i < strlen(line);){
         //skips blanks 
         if(line[i] == ' '){
+          i++;
+      }
+      if(line[i] == '\t'){
           i++;
       }
       //skips just empty lines
@@ -77,16 +83,16 @@ int main(int argc, char* argv[]) {
         token[0] = line[i];
         
         if(line[i] == LESS_THEN_OP || line[i] == GREATER_THEN_OP || line[i] == NOT_OP || line[i] == ASSIGN_OP) {
-          token[0] = line[i];
+          token[cnt] = line[i];
           
           if(line[i + 1] == ASSIGN_OP){
-            token[1] = line[i + 1];
+            token[cnt + 1] = line[i + 1];
             i++;
           }
         }
-        //problem here with statement 2
+        
         if(isdigit(line[i]) && isdigit(line[i + 1])){
-          //the problem is here
+          
             token[cnt] = line[i];
             token[cnt + 1] = line[i + 1];
             cnt++;
@@ -95,20 +101,28 @@ int main(int argc, char* argv[]) {
         get_token(token);
         //some blanks got through so i had to add this  here
         if(line[i] != ' '){
-          //fprintf(out_file,"Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
-          printf("Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+          if(strcmp(token_type,"INVALID") == 0){
+            fprintf(out_file, "===> '%s'\nLexical error: not a lexeme\n", token);
+          }
+          else{
+            fprintf(out_file,"Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+            //printf("Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+            count++;
+          }
+        
+         
+          
         }
         
         if(line[i] == ';'){
-          i++;
-          //uncomment later for file 
           //fprintf(out_file, "%s", "-----------------------------------------------\n");
-          printf("%s", "-----------------------------------------------\n");
+          fprintf(out_file,"%s", "-----------------------------------------------\n");
+          fprintf(out_file, "Statement #" "%d \n", line_count);
+          line_count++;
           count = 0;
-      }
-        //clear token
+          
+        }
         memset(token, 0, strlen(token));
-        count++;
         i++;
         cnt = 0;
       }//end of else
@@ -174,7 +188,12 @@ void get_token(char *token_ptr){
     else if(token_ptr[0] == RIGHT_PAREN){
       token_type = "RIGHT_PAREN";
     }
-    //do if for invalid token 
+    else if(token_ptr[0] == EXPON_OP){
+      token_type = "EXPON_OP";
+    }
+    else{
+      token_type = "INVALID";
+    }
     
 }//end of get_token
 

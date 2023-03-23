@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define INT_LITERAL 'INT_LITERAL'
 
 /**
 * add comment
