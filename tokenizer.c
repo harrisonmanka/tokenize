@@ -60,34 +60,50 @@ int main(int argc, char* argv[]) {
                            // where the input line resides.
       // Add code here. Keep this file no longer than 50 lines of code.
       // Use helper functions.
-      printf("%s", "-----------------------------------------------\n");
+      //work on right format.
+      //printf("Statement" "%d\n", count);
+      fprintf(out_file, "%s", "-----------------------------------------------\n");
       count = 0;
+      //this is here because the first time around token has unknown chars not sure why.
+      memset(token, 0, strlen(token));
       for(int i = 0; i < strlen(line);){
         if(line[i] == ' '){
           i++;
-          cnt++;
+          
+      }
+      if(line[i] == '\n'){
+        line++;
+        i++;
       }
       else{
-        token[0] = line[cnt];
+        token[0] = line[i];
         cnt++;
+        if(line[i] == LESS_THEN_OP || line[i] == GREATER_THEN_OP || line[i] == NOT_OP) {
+          token[0] = line[i];
+          
+          if(line[i + 1] == ASSIGN_OP){
+            token[1] = line[i + 1];
+            get_token(token);
+            i++;
+          }
+          
+        }
+        //problem here with statement 2
         while(isdigit(line[cnt])){
+          //the problem is here
             token[cnt] = line[cnt];
             cnt++;
         }//end of while
         get_token(token);
         //print token line
-        printf("Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+        fprintf(out_file,"Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
         //clear token
         memset(token, 0, strlen(token));
         count++;
         i++;
+        cnt = 0;
       }//end of else
     }//end of for
-      
-      //just set the token_type
-      
-      
-      
    }
    
 
@@ -118,6 +134,12 @@ void get_token(char *token_ptr){
     }
     else if(token_ptr[0] == LESS_THEN_OP){
       token_type = "LESS_THAN_OP";
+      token_ptr++;
+      if(token_ptr[0] == ASSIGN_OP){
+        token_type = "LESS_THAN_OR_EQUAL";
+    }
+      
+      
     }
     else if(token_ptr[0] == DIV_OP){
       token_type = "DIV_OP";
@@ -126,6 +148,10 @@ void get_token(char *token_ptr){
     }
     else if(token_ptr[0] == NOT_OP){
       token_type = "NOT_OP";
+      token_ptr++;
+      if(token_ptr[0] == ASSIGN_OP){
+        token_type = "NOT_EQUAL_OP";
+    }
     }
     else if(token_ptr[0] == ASSIGN_OP){
       token_type = "ASSIGN_OP";
@@ -139,6 +165,7 @@ void get_token(char *token_ptr){
     else if(token_ptr[0] == RIGHT_PAREN){
       token_type = "RIGHT_PAREN";
     }
+     
 
     
 }

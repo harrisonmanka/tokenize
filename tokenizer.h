@@ -18,12 +18,12 @@
 #define RIGHT_PAREN ')'
 #define EXPON_OP '^'
 #define LESS_THEN_OP '<'
-#define LESS_THEN_OR_EQUAL_OP '<='
-#define GREATER_THEN_OR_EQUAL_OP '>='
-#define EQUALS_OP '=='
+#define LESS_THEN_OR_EQUAL_OP "<="
+#define GREATER_THEN_OR_EQUAL_OP ">="
+#define EQUALS_OP "=="
 #define NOT_OP '!'
 #define GREATER_THEN_OP '>'
-#define NOT_EQUAL_OP '!='
+#define NOT_EQUAL_OP "!="
 #define SEMI_COLON ';'
 
 #include <stdio.h>
