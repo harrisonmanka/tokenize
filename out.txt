@@ -16,7 +16,7 @@ Lexeme 7 is + and is an ADD_OP
 Lexeme 8 is 7 and is an INT_LITERAL
 Lexeme 9 is ; and is a SEMI_COLON
 -----------------------------------------------
-Statement #3 
+Statement #3
 Lexeme 0 is 2 and is an INT_LITERAL
 Lexeme 1 is * and is a MULT_OP
 Lexeme 2 is 19 and is an INT_LITERAL

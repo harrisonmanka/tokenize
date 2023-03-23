@@ -25,8 +25,8 @@
 #define NOT_EQUAL_OP "!="
 #define SEMI_COLON ';'
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
+/**
+ * Function declaration for get_token
+ * @param char* single token contained in an array
+ */
 void get_token(char *);
