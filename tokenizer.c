@@ -58,45 +58,54 @@ int main(int argc, char* argv[]) {
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-      // Add code here. Keep this file no longer than 50 lines of code.
-      // Use helper functions.
-      //work on right format.
-      //printf("Statement" "%d\n", count);
-      fprintf(out_file, "%s", "-----------------------------------------------\n");
-      count = 0;
+      
+      
+      //printf("Statement" "%d \n", line_count);
       //this is here because the first time around token has unknown chars not sure why.
       memset(token, 0, strlen(token));
       for(int i = 0; i < strlen(line);){
+        //skips blanks 
         if(line[i] == ' '){
           i++;
-          
       }
-      if(line[i] == '\n'){
-        line++;
-        i++;
-      }
+      //skips just empty lines
+        if(line[i] == '\n'){
+          line++;
+          i++;
+        }
       else{
         token[0] = line[i];
-        cnt++;
-        if(line[i] == LESS_THEN_OP || line[i] == GREATER_THEN_OP || line[i] == NOT_OP) {
+        
+        if(line[i] == LESS_THEN_OP || line[i] == GREATER_THEN_OP || line[i] == NOT_OP || line[i] == ASSIGN_OP) {
           token[0] = line[i];
           
           if(line[i + 1] == ASSIGN_OP){
             token[1] = line[i + 1];
-            get_token(token);
             i++;
           }
-          
         }
         //problem here with statement 2
-        while(isdigit(line[cnt])){
+        if(isdigit(line[i]) && isdigit(line[i + 1])){
           //the problem is here
-            token[cnt] = line[cnt];
+            token[cnt] = line[i];
+            token[cnt + 1] = line[i + 1];
             cnt++;
+            i++;
         }//end of while
         get_token(token);
-        //print token line
-        fprintf(out_file,"Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+        //some blanks got through so i had to add this  here
+        if(line[i] != ' '){
+          //fprintf(out_file,"Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+          printf("Lexeme " "%d" " is " "%s" " and is an " "%s\n", count, token, token_type);
+        }
+        
+        if(line[i] == ';'){
+          i++;
+          //uncomment later for file 
+          //fprintf(out_file, "%s", "-----------------------------------------------\n");
+          printf("%s", "-----------------------------------------------\n");
+          count = 0;
+      }
         //clear token
         memset(token, 0, strlen(token));
         count++;
@@ -119,8 +128,7 @@ int main(int argc, char* argv[]) {
 */
 void get_token(char *token_ptr){
   //attempt to convert
-  long int value = strtol(token_ptr, NULL, 10);
-    if(value != 0){
+    if(isdigit(token_ptr[0])){
       token_type = "INT_LITERAL";
     }
     else if(token_ptr[0] == ADD_OP){
@@ -138,14 +146,11 @@ void get_token(char *token_ptr){
       if(token_ptr[0] == ASSIGN_OP){
         token_type = "LESS_THAN_OR_EQUAL";
     }
-      
-      
     }
     else if(token_ptr[0] == DIV_OP){
       token_type = "DIV_OP";
     }
-    else if(token_ptr[0] == ' '){
-    }
+    
     else if(token_ptr[0] == NOT_OP){
       token_type = "NOT_OP";
       token_ptr++;
@@ -155,6 +160,10 @@ void get_token(char *token_ptr){
     }
     else if(token_ptr[0] == ASSIGN_OP){
       token_type = "ASSIGN_OP";
+       token_ptr++;
+      if(token_ptr[0] == ASSIGN_OP){
+        token_type = "EQUALS_OP";
+    }
     }
     else if(token_ptr[0] == SEMI_COLON){
       token_type = "SEMI_COLON";
@@ -165,14 +174,8 @@ void get_token(char *token_ptr){
     else if(token_ptr[0] == RIGHT_PAREN){
       token_type = "RIGHT_PAREN";
     }
-     
-
+    //do if for invalid token 
     
-}
-
-
-/**
- * get token type
- */
+}//end of get_token
 
 
