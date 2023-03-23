@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
    {
       line = input_line;  // Sets a global pointer to the memory location
                            // where the input line resides.
-      while(*line != ";"){
+      while(*line != ";" || *line != "\0"){
           get_token(token);
       }
       if(*line == ";"){
@@ -82,22 +82,33 @@ void get_token(char *token_ptr){
     if(isdigit(line)){
         token_ptr[i] = line;
         line++;
+        i++;
+        get_token_type(line);
         //check for next number(s)
         while(isdigit(line)){
             token_ptr[i] = line;
             line++
+            i++;
         }
     }
     //get_token will call get_token_type with our token array containing "1" to set our GLOBAL token_type as INT_LITERAL
     //then call print_to_file with our GLOBAL file point, token array containing "1", and our GLBOAL token_type
     //to write to the output file
-    else if (< > ! =){
-        add to TOKEN ARRAY
-        check for =
+    else if ((strcmp(line, "<")) || (strcmp(line, ">")) || (strcmp(line, "!")) || (strcmp(line, "="))){
+        token_ptr[i] = line;
+        line++;
+        i++
+        if(strcmp(line, "=")){
+            token_ptr[i] = line;
+        }
     }
-    else if (*){
-        add to TOKEN ARRAY
-        check for **
+    else if (strcmp(line, "*")){
+        token_ptr[i] = line;
+        line++;
+    }
+    else if (strcmp(line, ";")){
+        token_ptr[i] = line;
+        line++;
     }
 }
 /**
@@ -106,7 +117,7 @@ void get_token(char *token_ptr){
  * @param token_arr
  * @param token_type
  */
-void print_to_file(FILE* out_file, char* token_arr, char* token_type){
+void print_to_file(char* token_arr, char* token_type){
 
 }
 

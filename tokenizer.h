@@ -31,11 +31,9 @@
 #include <stdlib.h>
 #define INT_LITERAL "[0-9]"
 
-/**
-* add comment
-*/
-char* remove_whitespace(char* );
-void get_token(char *); 
+
+void get_token(char*);
+void get_token_type(char*);
 void identify_lexeme(char*);
 
 
