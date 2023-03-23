@@ -1,9 +1,8 @@
 /**
  * Header file for the tokenizer project 
  * @author Harrison Manka & Matthew Agudelo
- * @version 03/16/23
+ * @version 03/23/23
  */
-/* Constants */
 #define LINE 100
 #define TSIZE 20
 #define TRUE 1
@@ -30,12 +29,4 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
-* add comment
-*/
-
-void get_token(char *); 
-void identify_lexeme(char*);
-void get_token_type(char);
-
-
+void get_token(char *);
