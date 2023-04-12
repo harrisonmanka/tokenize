@@ -25,15 +25,11 @@
 #define GREATER_THEN_OP ">"
 #define NOT_EQUAL_OP "!="
 #define SEMI_COLON ";"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#define INT_LITERAL "[0-9]"
+#define INT_LITERAL "[0-9]+"
 
 
 void get_token(char*);
 void get_token_type(char*);
-void identify_lexeme(char*);
+void print_to_file(FILE* out_file, char* token_arr, int count);
 
 
