@@ -49,10 +49,17 @@ int main(int argc, char* argv[]) {
   }
    while (fgets(input_line, LINE, in_file) != NULL)
    {
-      line = input_line;  // Sets a global pointer to the memory location
-                           // where the input line resides.
+       line = input_line;
+       if(line_count == 0){
+           line_count++;
+           fprintf(out_file, "Statement #" "%d \n", line_count);
+           line_count++;
+       }
       int count = 0;
-      while((strcmp(line, SEMI_COLON) == 1) || strcmp(line, "\0") == 1){
+       int i = 0;
+      fprintf(out_file, "here ");
+      while(!(strcmp(&line[i], SEMI_COLON) == 0) || !(strcmp(&line[i], "\0"))){
+          fprintf(out_file, "HERE");
           get_token(token);
           print_to_file(out_file, token, count);
           if(strcmp(token_type, "ERROR") == 1){
@@ -73,27 +80,24 @@ int main(int argc, char* argv[]) {
 */
 void get_token(char *token_ptr){
     token_ptr = "";
-    int i = 0;
+    int i = 0; int j = 0;
     //get rid of white space
-    while((strcmp(line," ") == 1) || (strcmp(line,"\t")) == 1){
-        line++;
+    while((strcmp(*line[j]," ") == 0) || (strcmp(*line[j],"\t")) == 0){
+        j++;
     }
     //check current line pointer
-    if(isdigit(*line)){
-        token_ptr[i] = *line;
-        line++;
-        i++;
-        get_token_type(line);
+    if(isdigit(line[j])){
+        token_ptr[i] = line[j];
+        i++; j++;
         //check for next number(s)
-        while(isdigit(*line)){
+        while(isdigit(line[j])){
             token_ptr[i] = *line;
-            line++;
-            i++;
+            i++; j++;
         }
         token_type = "INT_LITERAL"; grammar = "an";
     }
-    else if (!(strcmp(line, LESS_THEN_OP)) || !(strcmp(line, GREATER_THEN_OP)) || !(strcmp(line, ASSIGN_OP)) ||
-            !(strcmp(line, EQUALS_OP))){
+    else if ((strcmp(line, LESS_THEN_OP) == 0) || (strcmp(line, GREATER_THEN_OP) == 0) || (strcmp(line, ASSIGN_OP) == 0) ||
+            (strcmp(line, EQUALS_OP) == 0)){
         token_ptr[i] = *line;
         line++;
         i++;
@@ -101,13 +105,13 @@ void get_token(char *token_ptr){
             token_ptr[i] = *line;
         }
     }
-    else if (!(strcmp(line, MULT_OP)) || !(strcmp(line, SEMI_COLON)) || !(strcmp(line, LEFT_PAREN)) ||
-            !(strcmp(line, RIGHT_PAREN)) || !(strcmp(line, ADD_OP)) || !(strcmp(line, SUB_OP)) ||
-            !(strcmp(line, EXPON_OP)) || !(strcmp(line, DIV_OP))){
+    else if ((strcmp(line, MULT_OP) == 0) || (strcmp(line, SEMI_COLON) == 0) || (strcmp(line, LEFT_PAREN) == 0) ||
+            (strcmp(line, RIGHT_PAREN) == 0) || (strcmp(line, ADD_OP) == 0) || (strcmp(line, SUB_OP) == 0) ||
+            (strcmp(line, EXPON_OP) == 0) || (strcmp(line, DIV_OP) == 0)){
         token_ptr[i] = *line;
         line++;
     }
-    else if (strcmp(line,"@")){
+    else if (strcmp(line,"@") == 0){
         token_ptr[i] = *line;
         line++;
     }
