@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
    FILE  *out_file = NULL;
    int   line_count = 0;        /* Number of lines read             */
          //start,    /* is this the start of a new statement? */
-         //count = 0;             /* count of tokens                  */
+         int count = 0;             /* count of tokens                  */
 
   if (argc != 3) {
     printf("Usage: tokenizer inputFile outputFile\n");
@@ -55,19 +55,16 @@ int main(int argc, char* argv[]) {
            fprintf(out_file, "Statement #" "%d \n", line_count);
            line_count++;
        }
-      int count = 0;
-       int i = 0;
-      fprintf(out_file, "here ");
-      while(!(strcmp(&line[i], SEMI_COLON) == 0) || !(strcmp(&line[i], "\0"))){
-          fprintf(out_file, "HERE");
+      int i = 0;
+      while(line[i] != '\0' || line[i] != ';'){
           get_token(token);
+          count++;
+          get_token_type(token);
           print_to_file(out_file, token, count);
-          if(strcmp(token_type, "ERROR") == 1){
-              count++;
-          }
       }
-      if(strcmp(line, SEMI_COLON) == 0){
+      if(line[i] == ';'){
           line_count++; //statement number
+          count = 0; //token #
       }
    }
    fclose(in_file);
@@ -79,10 +76,10 @@ int main(int argc, char* argv[]) {
 * grab token
 */
 void get_token(char *token_ptr){
-    token_ptr = "";
-    int i = 0; int j = 0;
+    int i = 0; //token array index
+    int j = 0; //line index
     //get rid of white space
-    while((strcmp(*line[j]," ") == 0) || (strcmp(*line[j],"\t")) == 0){
+    while(line[j] == ' '){
         j++;
     }
     //check current line pointer
@@ -91,29 +88,30 @@ void get_token(char *token_ptr){
         i++; j++;
         //check for next number(s)
         while(isdigit(line[j])){
-            token_ptr[i] = *line;
+            token_ptr[i] = line[j];
             i++; j++;
         }
         token_type = "INT_LITERAL"; grammar = "an";
     }
-    else if ((strcmp(line, LESS_THEN_OP) == 0) || (strcmp(line, GREATER_THEN_OP) == 0) || (strcmp(line, ASSIGN_OP) == 0) ||
-            (strcmp(line, EQUALS_OP) == 0)){
-        token_ptr[i] = *line;
-        line++;
+    else if ((line[j] == '<') || (line[j] == '>') || (line[j] == '=') || (line[j] == '!')){
+        token_ptr[i] = line[j];
+        j++;
         i++;
-        if(strcmp(line, ASSIGN_OP)){
-            token_ptr[i] = *line;
+        if(line[j] == '='){
+            token_ptr[i] = line[j];
         }
     }
-    else if ((strcmp(line, MULT_OP) == 0) || (strcmp(line, SEMI_COLON) == 0) || (strcmp(line, LEFT_PAREN) == 0) ||
-            (strcmp(line, RIGHT_PAREN) == 0) || (strcmp(line, ADD_OP) == 0) || (strcmp(line, SUB_OP) == 0) ||
-            (strcmp(line, EXPON_OP) == 0) || (strcmp(line, DIV_OP) == 0)){
-        token_ptr[i] = *line;
-        line++;
+    else if ((line[j] == '*') || (line[j] == ';') || (line[j] == '(') ||
+            (line[j] == ')') || (line[j] == '+') || (line[j] == '-') ||
+            (line[j] == '^') || (line[j] == '/')){
+        token_ptr[i] = line[j];
+        i++;
+        j++;
     }
-    else if (strcmp(line,"@") == 0){
-        token_ptr[i] = *line;
-        line++;
+    else{
+        token_ptr[i] = line[j];
+        i++;
+        j++;
     }
 }
 /**
