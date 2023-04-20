@@ -99,7 +99,6 @@ void get_token(char *token_ptr){
             token_ptr[i] = line[j];
             i++; j++;
         }
-        token_type = "INT_LITERAL"; grammar = "an";
     }
     else if ((line[j] == '<') || (line[j] == '>') || (line[j] == '=') || (line[j] == '!')){
         token_ptr[i] = line[j];
@@ -199,6 +198,9 @@ void get_token_type(char* token){
     else if (strcmp(token, SEMI_COLON) == 0) {
         token_type = "SEMI_COLON";
         grammar = "a";
+    }
+    else if (isdigit(token[0])){
+        token_type = "INT_LITERAL"; grammar = "an";
     }
     else {
         token_type = "ERROR";
