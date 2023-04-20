@@ -24,63 +24,67 @@ int j;
 * add comment
 */
 int main(int argc, char* argv[]) {
-   char  token[TSIZE];      /* Spot to hold a token, fixed size */
-   char  input_line[LINE];  /* Line of input, fixed size        */
-   FILE  *in_file = NULL;        /* File pointer                     */
-   FILE  *out_file = NULL;
-   int   line_count = 0;        /* Number of lines read             */
-         //start,    /* is this the start of a new statement? */
-         int count = 0;             /* count of tokens                  */
+    char  token[TSIZE];      /* Spot to hold a token, fixed size */
+    char  input_line[LINE];  /* Line of input, fixed size        */
+    FILE  *in_file = NULL;        /* File pointer                     */
+    FILE  *out_file = NULL;
+    int   line_count = 0;        /* Number of lines read             */
+    //start,    /* is this the start of a new statement? */
+    int count = 0;             /* count of tokens                  */
 
-  if (argc != 3) {
-    printf("Usage: tokenizer inputFile outputFile\n");
-    exit(1);
-  }
+    if (argc != 3) {
+        printf("Usage: tokenizer inputFile outputFile\n");
+        exit(1);
+    }
 
-  in_file = fopen(argv[1], "r");
-  if (in_file == NULL) {
-    fprintf(stderr, "ERROR: could not open %s for reading\n", argv[1]);
-    exit(1);
-  }
+    in_file = fopen(argv[1], "r");
+    if (in_file == NULL) {
+        fprintf(stderr, "ERROR: could not open %s for reading\n", argv[1]);
+        exit(1);
+    }
 
-  out_file = fopen(argv[2], "w");
-  if (out_file == NULL) {
-    fprintf(stderr, "ERROR: could not open %s for writing\n", argv[2]);
-    exit(1);
-  }
-   while (fgets(input_line, LINE, in_file) != NULL)
-   {
-       line = input_line;
-       if(line_count == 0){
-           line_count++;
-           fprintf(out_file, "Statement #" "%d \n", line_count);
-           line_count++;
-       }
-      int i = 0;
-      while(line[i] != '\0' || line[i] != ';'){
-          get_token(token);
-          count++;
-          get_token_type(token);
-          print_to_file(out_file, token, count);
-      }
-      j = 0;
-      if(line[i] == ';'){
-          line_count++; //statement number
-          count = 0; //token #
-      }
-   }
-   fclose(in_file);
-   fclose(out_file);
-   return 0;
+    out_file = fopen(argv[2], "w");
+    if (out_file == NULL) {
+        fprintf(stderr, "ERROR: could not open %s for writing\n", argv[2]);
+        exit(1);
+    }
+    while (fgets(input_line, LINE, in_file) != NULL)
+    {
+        line = input_line;
+        if(line_count == 0){
+            line_count++;
+            fprintf(out_file, "Statement #" "%d \n", line_count);
+            line_count++;
+        }
+        int i = 0;
+        while(line[i] != '\0' || line[i] != '\n'){
+            get_token(token);
+            count++;
+            get_token_type(token);
+            print_to_file(out_file, token, count);
+            memset(token, 0, sizeof(token));
+        }
+        j = 0;
+        if(line[i] == ';'){
+            get_token(token);
+            count++;
+            print_to_file(out_file, token, count);
+            fprintf(out_file,"%s", "-----------------------------------------------\n");
+            line_count++; //statement number
+            count = 0; //token #
+            memset(token, 0, sizeof(token));
+        }
+    }
+    fclose(in_file);
+    fclose(out_file);
+    return 0;
 }
 
 /**
 * grab token
 */
 void get_token(char *token_ptr){
-    int i = 0; //token array index
-    //int j = 0; //line index
-    //get rid of white space
+    int i = 0;
     while(line[j] == ' '){
         j++;
     }
@@ -101,15 +105,12 @@ void get_token(char *token_ptr){
         i++;
         if(line[j] == '='){
             token_ptr[i] = line[j];
+            j++;
         }
     }
     else if ((line[j] == '*') || (line[j] == ';') || (line[j] == '(') ||
-            (line[j] == ')') || (line[j] == '+') || (line[j] == '-') ||
-            (line[j] == '^') || (line[j] == '/')){
-        token_ptr[i] = line[j];
-        j++;
-    }
-    else{
+             (line[j] == ')') || (line[j] == '+') || (line[j] == '-') ||
+             (line[j] == '^') || (line[j] == '/') || (line[j] == ';')){
         token_ptr[i] = line[j];
         j++;
     }
@@ -133,71 +134,71 @@ void print_to_file(FILE* out_file, char* token_arr, int count){
  * get token type
  */
 void get_token_type(char* token){
-        if(strcmp(token, ADD_OP) == 0) {
-            token_type = "ADD_OP";
-            grammar = "an";
-        }
-        else if (strcmp(token, SUB_OP) == 0) {
-            token_type = "SUB_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, MULT_OP) == 0) {
-            token_type = "MULT_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, DIV_OP) == 0) {
-            token_type = "DIV_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, LEFT_PAREN) == 0) {
-            token_type = "LEFT_PAREN";
-            grammar = "a";
-        }
-        else if (strcmp(token, RIGHT_PAREN) == 0){
-            token_type = "RIGHT_PAREN";
-            grammar = "a";
-        }
-        else if (strcmp(token, EXPON_OP) == 0) {
-            token_type = "EXPON_OP";
-            grammar = "an";
-        }
-        else if (strcmp(token, ASSIGN_OP) == 0) {
-            token_type = "ASSIGN_OP";
-            grammar = "an";
-        }
-        else if (strcmp(token, LESS_THEN_OP) == 0) {
-            token_type = "LESS_THEN_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, LESS_THEN_OR_EQUAL_OP) == 0) {
-            token_type = "LESS_THEN_OR_EQUAL_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, GREATER_THEN_OP) == 0) {
-            token_type = "GREATER_THEN_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, GREATER_THEN_OR_EQUAL_OP) == 0) {
-            token_type = "GREATER_THEN_OR_EQUAL_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, EQUALS_OP) == 0) {
-            token_type = "EQUALS_OP";
-            grammar = "an";
-        }
-        else if (strcmp(token, NOT_OP) == 0) {
-            token_type = "NOT_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, NOT_EQUAL_OP) == 0) {
-            token_type = "NOT_EQUAL_OP";
-            grammar = "a";
-        }
-        else if (strcmp(token, SEMI_COLON) == 0) {
-            token_type = "SEMI_COLON";
-            grammar = "a";
-        }
-        else {
-            token_type = "ERROR";
-        }
+    if(strcmp(token, ADD_OP) == 0) {
+        token_type = "ADD_OP";
+        grammar = "an";
+    }
+    else if (strcmp(token, SUB_OP) == 0) {
+        token_type = "SUB_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, MULT_OP) == 0) {
+        token_type = "MULT_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, DIV_OP) == 0) {
+        token_type = "DIV_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, LEFT_PAREN) == 0) {
+        token_type = "LEFT_PAREN";
+        grammar = "a";
+    }
+    else if (strcmp(token, RIGHT_PAREN) == 0){
+        token_type = "RIGHT_PAREN";
+        grammar = "a";
+    }
+    else if (strcmp(token, EXPON_OP) == 0) {
+        token_type = "EXPON_OP";
+        grammar = "an";
+    }
+    else if (strcmp(token, ASSIGN_OP) == 0) {
+        token_type = "ASSIGN_OP";
+        grammar = "an";
+    }
+    else if (strcmp(token, LESS_THEN_OP) == 0) {
+        token_type = "LESS_THEN_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, LESS_THEN_OR_EQUAL_OP) == 0) {
+        token_type = "LESS_THEN_OR_EQUAL_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, GREATER_THEN_OP) == 0) {
+        token_type = "GREATER_THEN_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, GREATER_THEN_OR_EQUAL_OP) == 0) {
+        token_type = "GREATER_THEN_OR_EQUAL_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, EQUALS_OP) == 0) {
+        token_type = "EQUALS_OP";
+        grammar = "an";
+    }
+    else if (strcmp(token, NOT_OP) == 0) {
+        token_type = "NOT_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, NOT_EQUAL_OP) == 0) {
+        token_type = "NOT_EQUAL_OP";
+        grammar = "a";
+    }
+    else if (strcmp(token, SEMI_COLON) == 0) {
+        token_type = "SEMI_COLON";
+        grammar = "a";
+    }
+    else {
+        token_type = "ERROR";
+    }
 }
