@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
         }
         while(line[j] != '\0'){
             get_token(token);
-            count++;
+            count++; //lexeme count
             get_token_type(token);
             print_to_file(out_file, token, count);
             memset(token, 0, sizeof(token));
