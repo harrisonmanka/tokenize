@@ -19,7 +19,7 @@ char *line;             // Global pointer to line of input
 // (optional) can declare some additional variable if you want to
 char *token_type = "";
 char *grammar = "";
-int j;
+int j = 0;
 /**
 * add comment
 */
@@ -56,16 +56,18 @@ int main(int argc, char* argv[]) {
             fprintf(out_file, "Statement #" "%d \n", line_count);
             line_count++;
         }
-        int i = 0;
-        while(line[i] != '\0' || line[i] != '\n'){
+        while(line[j] != '\0'){
             get_token(token);
             count++;
             get_token_type(token);
             print_to_file(out_file, token, count);
             memset(token, 0, sizeof(token));
+            if(line[j] == '\n'){
+                line++;
+            }
         }
         j = 0;
-        if(line[i] == ';'){
+        if(line[j] == ';'){
             get_token(token);
             count++;
             print_to_file(out_file, token, count);
@@ -89,11 +91,11 @@ void get_token(char *token_ptr){
         j++;
     }
     //check current line pointer
-    if(isdigit(line[j]) > 0){
+    if(isdigit(line[j])){
         token_ptr[i] = line[j];
         i++; j++;
         //check for next number(s)
-        while(isdigit(line[j]) > 0){
+        while(isdigit(line[j])){
             token_ptr[i] = line[j];
             i++; j++;
         }
