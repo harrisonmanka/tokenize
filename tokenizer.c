@@ -19,6 +19,7 @@ char *line;             // Global pointer to line of input
 // (optional) can declare some additional variable if you want to
 char *token_type = "";
 char *grammar = "";
+int j;
 /**
 * add comment
 */
@@ -62,6 +63,7 @@ int main(int argc, char* argv[]) {
           get_token_type(token);
           print_to_file(out_file, token, count);
       }
+      j = 0;
       if(line[i] == ';'){
           line_count++; //statement number
           count = 0; //token #
@@ -77,17 +79,17 @@ int main(int argc, char* argv[]) {
 */
 void get_token(char *token_ptr){
     int i = 0; //token array index
-    int j = 0; //line index
+    //int j = 0; //line index
     //get rid of white space
     while(line[j] == ' '){
         j++;
     }
     //check current line pointer
-    if(isdigit(line[j])){
+    if(isdigit(line[j]) > 0){
         token_ptr[i] = line[j];
         i++; j++;
         //check for next number(s)
-        while(isdigit(line[j])){
+        while(isdigit(line[j]) > 0){
             token_ptr[i] = line[j];
             i++; j++;
         }
@@ -105,12 +107,10 @@ void get_token(char *token_ptr){
             (line[j] == ')') || (line[j] == '+') || (line[j] == '-') ||
             (line[j] == '^') || (line[j] == '/')){
         token_ptr[i] = line[j];
-        i++;
         j++;
     }
     else{
         token_ptr[i] = line[j];
-        i++;
         j++;
     }
 }
