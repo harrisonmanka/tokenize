@@ -63,7 +63,13 @@ int main(int argc, char* argv[]) {
             print_to_file(out_file, token, count);
             memset(token, 0, sizeof(token));
             if(line[j] == '\n'){
+                fprintf(out_file,"%s", "-----------------------------------------------\n");
+                fprintf(out_file, "Statement #" "%d \n", line_count);
+                line_count++;
                 line++;
+            }
+            else if(line[j] == '\t'){
+                j++;
             }
             else if(line[j] == ';'){
                 get_token(token);
@@ -76,17 +82,6 @@ int main(int argc, char* argv[]) {
                 memset(token, 0, sizeof(token));
             }
         }
-//        if(line[j] == ';'){
-//            get_token(token);
-//            count++;
-//            fprintf(out_file, "IN SEMI COLON IF STATEMENT");
-//            print_to_file(out_file, token, count);
-//            fprintf(out_file,"%s", "-----------------------------------------------\n");
-//            fprintf(out_file, "Statement #" "%d \n", line_count);
-//            line_count++; //statement number
-//            count = 0; //token #
-//            memset(token, 0, sizeof(token));
-//        }
         j = 0;
     }
     fclose(in_file);
