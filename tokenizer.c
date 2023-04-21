@@ -56,16 +56,16 @@ int main(int argc, char* argv[]) {
             fprintf(out_file, "Statement #" "%d \n", line_count);
             line_count++;
         }
-        while(line[j] != '\0' || line[j] != '\000'){
+        while(line[j] != '\0'){
             get_token(token);
-            count++; //lexeme count
             get_token_type(token);
             print_to_file(out_file, token, count);
+            count++; //lexeme count
             memset(token, 0, sizeof(token));
             if(line[j] == '\n'){
                 fprintf(out_file,"%s", "-----------------------------------------------\n");
-                count = 0;
                 fprintf(out_file, "Statement #" "%d \n", line_count);
+                count = 0;
                 line_count++;
                 line++;
             }
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
             }
             else if(line[j] == ';'){
                 get_token(token);
-                count++;
+                token_type = "SEMI_COLON";
                 print_to_file(out_file, token, count);
                 fprintf(out_file,"%s", "-----------------------------------------------\n");
                 fprintf(out_file, "Statement #" "%d \n", line_count);
