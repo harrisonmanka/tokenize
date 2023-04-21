@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
             fprintf(out_file, "Statement #" "%d \n", line_count);
             line_count++;
         }
-        while(line[j] != '\0'){
+        while(line[j] != '\0' || line[j] != '\000'){
             get_token(token);
             count++; //lexeme count
             get_token_type(token);
@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
             memset(token, 0, sizeof(token));
             if(line[j] == '\n'){
                 fprintf(out_file,"%s", "-----------------------------------------------\n");
+                count = 0;
                 fprintf(out_file, "Statement #" "%d \n", line_count);
                 line_count++;
                 line++;
