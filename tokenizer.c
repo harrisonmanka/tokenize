@@ -19,7 +19,7 @@ char *line;             // Global pointer to line of input
 // (optional) can declare some additional variable if you want to
 char *token_type = "";
 char *grammar = "";
-int j = 0;
+int j;
 /**
 * add comment
 */
@@ -65,17 +65,29 @@ int main(int argc, char* argv[]) {
             if(line[j] == '\n'){
                 line++;
             }
+            else if(line[j] == ';'){
+                get_token(token);
+                count++;
+                print_to_file(out_file, token, count);
+                fprintf(out_file,"%s", "-----------------------------------------------\n");
+                fprintf(out_file, "Statement #" "%d \n", line_count);
+                line_count++; //statement number
+                count = 0; //token #
+                memset(token, 0, sizeof(token));
+            }
         }
+//        if(line[j] == ';'){
+//            get_token(token);
+//            count++;
+//            fprintf(out_file, "IN SEMI COLON IF STATEMENT");
+//            print_to_file(out_file, token, count);
+//            fprintf(out_file,"%s", "-----------------------------------------------\n");
+//            fprintf(out_file, "Statement #" "%d \n", line_count);
+//            line_count++; //statement number
+//            count = 0; //token #
+//            memset(token, 0, sizeof(token));
+//        }
         j = 0;
-        if(line[j] == ';'){
-            get_token(token);
-            count++;
-            print_to_file(out_file, token, count);
-            fprintf(out_file,"%s", "-----------------------------------------------\n");
-            line_count++; //statement number
-            count = 0; //token #
-            memset(token, 0, sizeof(token));
-        }
     }
     fclose(in_file);
     fclose(out_file);
@@ -87,9 +99,10 @@ int main(int argc, char* argv[]) {
 */
 void get_token(char *token_ptr){
     int i = 0;
-    while(line[j] == ' '){
+    while(line[j] == ' ' || line[j] == '\t'){
         j++;
     }
+
     //check current line pointer
     if(isdigit(line[j])){
         token_ptr[i] = line[j];

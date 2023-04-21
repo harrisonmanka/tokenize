@@ -1,2 +1,60 @@
 Statement #1 
-1(72 12
+Lexeme 1 is 1 and is an INT_LITERAL
+Lexeme 2 is <= and is a LESS_THEN_OR_EQUAL_OP
+Lexeme 3 is 2 and is an INT_LITERAL
+Lexeme 4 is ; and is an INT_LITERAL
+-----------------------------------------------
+Statement #2 
+===> ''
+Lexical error: not a lexeme
+===> ''
+Lexical error: not a lexeme
+Lexeme 3 is ( and is a LEFT_PAREN
+Lexeme 4 is 2 and is an INT_LITERAL
+Lexeme 5 is ^ and is an EXPON_OP
+Lexeme 6 is 2 and is an INT_LITERAL
+Lexeme 7 is ) and is a RIGHT_PAREN
+Lexeme 8 is != and is a NOT_EQUAL_OP
+Lexeme 9 is 10 and is an INT_LITERAL
+Lexeme 10 is + and is an ADD_OP
+===> ''
+Lexical error: not a lexeme
+Lexeme 12 is 7 and is an INT_LITERAL
+Lexeme 13 is ; and is a SEMI_COLON
+===> ''
+Lexical error: not a lexeme
+===> ''
+Lexical error: not a lexeme
+Lexeme 16 is 2 and is an INT_LITERAL
+Lexeme 17 is * and is a MULT_OP
+Lexeme 18 is 19 and is an INT_LITERAL
+===> ''
+Lexical error: not a lexeme
+Lexeme 20 is + and is an ADD_OP
+Lexeme 21 is ( and is a LEFT_PAREN
+Lexeme 22 is 5 and is an INT_LITERAL
+Lexeme 23 is / and is a DIV_OP
+Lexeme 24 is 0 and is an INT_LITERAL
+Lexeme 25 is ) and is a RIGHT_PAREN
+Lexeme 26 is ; and is a RIGHT_PAREN
+-----------------------------------------------
+Statement #3 
+===> ''
+Lexical error: not a lexeme
+===> ''
+Lexical error: not a lexeme
+Lexeme 3 is 1 and is an INT_LITERAL
+Lexeme 4 is == and is an EQUALS_OP
+Lexeme 5 is = and is an ASSIGN_OP
+Lexeme 6 is 2 and is an INT_LITERAL
+Lexeme 7 is ; and is an INT_LITERAL
+-----------------------------------------------
+Statement #4 
+===> ''
+Lexical error: not a lexeme
+===> ''
+Lexical error: not a lexeme
+Lexeme 3 is 2 and is an INT_LITERAL
+Lexeme 4 is * and is a MULT_OP
+Lexeme 5 is * and is a MULT_OP
+Lexeme 6 is 9 and is an INT_LITERAL
