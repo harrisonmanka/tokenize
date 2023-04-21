@@ -128,6 +128,9 @@ void get_token(char *token_ptr){
         token_ptr[i] = line[j];
         j++;
     }
+    else{
+        j++;
+    }
 }
 /**
  *
