@@ -125,7 +125,6 @@ void get_token(char *token_ptr){
         j++;
     }
     else{
-        token_ptr[i] = line[j];
         j++;
     }
 }
@@ -136,8 +135,8 @@ void get_token(char *token_ptr){
  * @param token_type
  */
 void print_to_file(FILE* out_file, char* token_arr, int count){
-    if(!(strcmp(token_type, "ERROR"))) {
-        fprintf(out_file, "===> '%s'\nLexical error: not a lexeme\n", token_arr);
+    if(!(strcmp(token_type, "ERROR")) && line[j] != '\0' && line[j] != '\n') {
+        fprintf(out_file, "===> '%c'\nLexical error: not a lexeme\n", line[j-1]);
     }
     else{
         fprintf(out_file, "Lexeme " "%d" " is " "%s" " and is %s " "%s\n", count, token_arr, grammar, token_type);
